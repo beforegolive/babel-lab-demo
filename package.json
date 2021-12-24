@@ -1,0 +1,20 @@
+{
+  "name": "first-babel-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r esm index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "esm": "^3.2.25"
+  },
+  "dependencies": {
+    "@babel/traverse": "^7.16.5"
+  }
+}
