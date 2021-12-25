@@ -11,10 +11,8 @@ function myFirstPlugin() {
         }
       },
       FunctionDeclaration(path) {
-        console.log('=== FunctionDeclaration node:', path.node)
         const paramNameIden = path.node.params[0]
         paramNameIden.name = 'y'
-        console.log('=== paramNameIden', paramNameIden)
       },
       // BlockStatement(path) {
       //   console.log('=== BlockStatement node:', path.node)
@@ -24,7 +22,6 @@ function myFirstPlugin() {
       //   console.log('=== ReturnStatement path:', path.node)
       // },
       BinaryExpression(path) {
-        console.log('=== BinaryExpression path:', path.node)
         if (path.node.operator === '*') {
           console.log('*** path.node.operator ', path.node.operator)
           path.node.operator = '+'

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node -r esm index.js",
+    "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,12 +12,17 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.16.5",
+    "@babel/node": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
     "@babel/template": "^7.16.0",
     "ast-pretty-print": "^2.0.1",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-preset-env": "^1.7.0",
     "esm": "^3.2.25"
   },
   "dependencies": {
     "@babel/traverse": "^7.16.5",
-    "@babel/types": "^7.16.0"
+    "@babel/types": "^7.16.0",
+    "babel-plugin-console": "^0.2.1"
   }
 }
