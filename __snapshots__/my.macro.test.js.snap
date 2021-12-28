@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`unknown plugin 1. unknown plugin: 1. unknown plugin 1`] = `
+
+import MyMacro from './my.macro'
+const props = { arr:[{name:'123'}]}
+// MyMacro(props, _=>_.arr[0].name)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const props = {
+  arr: [
+    {
+      name: "123",
+    },
+  ],
+}; // MyMacro(props, _=>_.arr[0].name)
+
+
+`;

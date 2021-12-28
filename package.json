@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +17,10 @@
     "@babel/template": "^7.16.0",
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-tester": "^10.1.0",
     "babel-preset-env": "^1.7.0",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "jest": "^27.4.5"
   },
   "dependencies": {
     "@babel/traverse": "^7.16.5",

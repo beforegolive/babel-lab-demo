@@ -110,6 +110,7 @@ function myMacro({ references, state, babel }) {
   references.default.forEach((referencePath) => {
     if (referencePath.parentPath.type === 'CallExpression') {
       // TO DO
+      debugger
       idx_transform(referencePath.parentPath, state)
     } else {
       ;('idx.macro can only be used a function, and can not be passed around as an argument.')
