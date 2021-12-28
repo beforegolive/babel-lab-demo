@@ -49,7 +49,9 @@ function makeCondition(node, state, inside) {
         '!=',
         t.assignmentExpression('=', state.temp, node),
         t.nullLiteral()
-      )
+      ),
+      inside,
+      state.temp
     )
   } else {
     return node
