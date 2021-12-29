@@ -135,11 +135,31 @@ const idx_transform = (path, state) => {
   path.scope.push({ id: temp })
 }
 
+/** 测试代码上下文 
+ *  `
+      import MyMacro from './my.macro'
+      const props = { arr:[{name:'123'}]}
+      MyMacro(props, _=>_.arr[0].name)
+    `,
+ *  【重点参数解析】
+ *  references: 
+ *  default属性作为入口，切入点是自定义宏执行的那一个方法节点。
+ *  比如下面的代码，切入点就是第三行MyMacro方法开始执行的地方，Identifier表达式。
+ *  其中：
+ *  parent属性指向父节点，即这行第三行函数
+ *  parentPath属性指向父节点，基本通parent，但多了路径追溯，可以继续往上查节点
+ * 
+ *  state：
+ *  file属性中含代码、ast语法树、babel插件信息等信息，解析元数据的核心参数
+ * 
+ *  babel:
+ *  @babel/core依赖项的实例
+ *
+ * @param {*} { references, state, babel }
+ */
 function myMacro({ references, state, babel }) {
   references.default.forEach((referencePath) => {
     if (referencePath.parentPath.type === 'CallExpression') {
-      // TO DO
-      debugger
       idx_transform(referencePath.parentPath, state)
     } else {
       ;('idx.macro can only be used a function, and can not be passed around as an argument.')
