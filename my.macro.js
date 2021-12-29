@@ -59,10 +59,9 @@ function makeCondition(node, state, inside) {
 }
 
 /** 递归思路：
- * 依次遍历MemberExpression的body属性，并将当前节点做个转换并记录在inside参数中，依次传入
+ * 依次遍历MemberExpression的body属性，将当前节点做个转换并记录在inside参数中，依次传入
  *
  * inside思路：
- *  (_ref = props) != null ? "inside" : _ref
  * 第一步：
  *  _.arr[0].name -> _ref.name
  *
