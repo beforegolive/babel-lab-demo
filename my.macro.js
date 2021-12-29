@@ -58,6 +58,29 @@ function makeCondition(node, state, inside) {
   }
 }
 
+/** 递归思路：
+ * 依次遍历MemberExpression的body属性，并将当前节点做个转换并记录在inside参数中，依次传入
+ *
+ * inside思路：
+ *  (_ref = props) != null ? "inside" : _ref
+ * 第一步：
+ *  _.arr[0].name -> _ref.name
+ *
+ * 第二步:
+ * _.arr[0] -> (_ref=_ref[0]) != null ? _ref.name : _ref
+ *
+ * 第三步：
+ * _.arr ->
+ * (_ref=_ref.arr)!=null
+ *  ? (_ref=_ref[0]) != null ? _ref.name : _ref
+ *  : _ref
+ *
+ * 第四步: 【将_替换为props】
+ *  _ ->
+ *  (_ref = props) != null
+ *  ? 【第三步的产出】
+ *  : _ref
+ */
 function makeChain(node, state, inside) {
   if (t.isCallExpression(node)) {
     return makeChain(
@@ -76,7 +99,8 @@ function makeChain(node, state, inside) {
       )
     )
   } else if (t.isIdentifier(node)) {
-    // state.base 是指?
+    // state.base 是指：箭头函数的参数名，这里为'_'
+    // 此处的判断可以将方法发起主体限制为传入参数。
     if (node.name !== state.base.name) {
       throw state.file.buildCodeFrameError(
         node,
@@ -93,18 +117,21 @@ function makeChain(node, state, inside) {
   }
 }
 
+// MyMacro(props, _=>_.arr[0].name)
 const idx_transform = (path, state) => {
   const node = path.node
   checkIdxArguments(state.file, node)
+  // path.scope表当前作用域
   const temp = path.scope.generateUidIdentifier('ref')
   const replacement = makeChain(node.arguments[1].body, {
-    file: state.file,
-    input: node.arguments[0],
-    base: node.arguments[1].params[0],
-    temp,
+    file: state.file, // 表语法树解析的上下文
+    input: node.arguments[0], // 表示要转换的对象，对应参数props
+    base: node.arguments[1].params[0], // 表示箭头函数中的参数名
+    temp, // 表示声明的变量 var ref
   })
 
   path.replaceWith(replacement)
+  // 把声明的变量添加到当前作用域中
   path.scope.push({ id: temp })
 }
 
